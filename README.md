@@ -24,7 +24,7 @@ If you want to create a custom version of the Contract Manager you will need to 
 4. Click “Upload”
 5. Finally, click the “Get Functions” button under it to showcase the functions and inputs for the contract you entered.
 
-NOTE: We do not advise you remove the “getDeployedContracts” function on any custom contract implementations you create. We have a statically placed a table at the end of the page for quick reference to all the contracts deployed on the network by the contract manager. Use this to quickly fetch the addresses of deployed contracts to be able to interact with them.
+**NOTE:** We do not advise you remove the “getDeployedContracts” function on any custom contract implementations you create. We have a statically placed a table at the end of the page for quick reference to all the contracts deployed on the network by the contract manager. Use this to quickly fetch the addresses of deployed contracts to be able to interact with them.
 
 If you want to interact with a custom contract, make sure the type is defined and added to the Contract Manager so you can deploy an instance of the contract.
 
