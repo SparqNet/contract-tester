@@ -148,7 +148,7 @@ function ContractManager() {
     }
   },[]);
   return (
-    <div className="flex flex-col min-h-screen overflow-y-auto space-y-5 w-full ml-[20vw]">
+    <div className="flex flex-col min-h-screen overflow-y-auto space-y-5 w-full bg-gray-400 ml-[18vw] p-10">
       <span>
         <div className="flex flex-row justify-center items-start space-x-10 my-12">
           <h2 className={`${inter.className} mb-5 text-xl font-semibold`}>
@@ -431,13 +431,13 @@ export default function Home() {
           <span className="flex flex-col space-y-10  h-[30vh]">
             <button
               onClick={() => setDefault(true)}
-              className="bg-white w-[60%] justify-center flex flex-row mx-auto rounded p-3 outline-none"
+              className="bg-white w-[70%] text-black justify-center flex flex-row mx-auto rounded p-3 outline-none"
             >
               Contract Manager
             </button>
             <button
               onClick={() => setDefault(false)}
-              className="bg-white w-[60%] justify-center flex flex-row mx-auto rounded p-3 outline-none"
+              className="bg-white text-black w-[70%] justify-center flex flex-row mx-auto rounded p-3 outline-none"
             >
               Custom Contract
             </button>
@@ -446,13 +446,15 @@ export default function Home() {
           {connected == false ? (
             <button
               onClick={() => connectToMetamask()}
-              className="bg-white w-[60%] justify-center flex flex-row mx-auto rounded p-5 outline-none items-center"
+              className="bg-white w-[70%] text-black justify-center flex flex-row mx-auto rounded p-5 outline-none items-center"
             >
-              Connect Metamask
-              <img
+             <p className="w-[50%]">Connect Metamask</p> 
+              <Image
                 alt="Metamask"
-                className="h-[100%] w-[24%] ml-3"
-                src="https://cdn.iconscout.com/icon/free/png-512/metamask-2728406-2261817.png"
+                className="h-[100%] w-[50%] ml-4"
+                width={100}
+                height={100}
+                src="/metamask.png"
               />
             </button>
           ) : (
@@ -468,7 +470,7 @@ export default function Home() {
       ) : (
         <div
           key={connected}
-          className="flex flex-col justify-center items-center w-full ml-[18vw] min-h-screen h-[100%] bg-cyan-200 px-10"
+          className="flex flex-col justify-center items-center w-full ml-[18vw] min-h-screen h-[100%] bg-cyan-300 pl-10"
         >
           <div className="flex flex-row justify-center space-x-10 ">
             <h2 className={`${inter.className} mb-5 text-xl font-semibold`}>
