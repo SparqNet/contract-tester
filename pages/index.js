@@ -49,12 +49,10 @@ function ContractManager() {
 
   function handleAbiChange() {
     try {
-      console.log(abiInput);
       let reader = new FileReader();
       reader.readAsText(abiInput);
       reader.onload = () => {
-        const abi = JSON.parse(reader.result);
-        const input = abi.abi;
+        const input = JSON.parse(reader.result);
         setAbi(input);
       };
     } catch (error) {
@@ -80,7 +78,6 @@ function ContractManager() {
     try {
       let params = [];
       const inputs = document.querySelectorAll(`#${contractName} input`);
-      console.log(inputs);
       inputs.forEach((element) => {
         if (typeof element.value === "string") {
           params.push(element.value);
@@ -281,7 +278,6 @@ export default function Home() {
       const signer = await provider.getSigner();
       const address = signer.address;
 
-      console.log(`Connected to Metamask wallet at address ${address}`);
       setConnected(true);
       // Return the provider and signer
       return { signer };
@@ -310,7 +306,6 @@ export default function Home() {
           .request({ method: "eth_accounts" })
           .then((accounts) => {
             if (accounts.length === 0) {
-              console.log("Not Connected");
               setConnected(false);
               return;
             }
@@ -327,7 +322,6 @@ export default function Home() {
     try {
       let params = [];
       const inputs = document.querySelectorAll(`#${FunctName} input`);
-      console.log(inputs);
       inputs.forEach((element) => {
         if (typeof element.value === "string") {
           params.push(element.value);
@@ -395,7 +389,7 @@ export default function Home() {
       reader.readAsText(abiInput);
       reader.onload = () => {
         const input = JSON.parse(reader.result);
-        setContractAbi(input.abi);
+        setContractAbi(input);
       };
     } catch (error) {
       console.log({ "invalid json/abi": error });
