@@ -51,18 +51,6 @@ Every time you want to change contracts, deploy a new one, change the address an
 
 **NOTE:** The ABI needs to be a valid JSON ABI, not just an array as you might be used to. Make sure the key holding the ABI is labeled "abi". It should look something like this:
 
-```
-{
-  "abi": [
-    {
-      inputs: [],
-      stateMutability: non-payable,
-      outputs: [],
-    }
-  ]
-}
-```
-
 **NOTE:** If you are passing an array as input values, just separate them by commas, and the application will do all the necessary changes.
 
 Thank you for using the SparqNet contract testing environment!
