@@ -159,7 +159,7 @@ function ContractManager() {
     }
   },[]);
   return (
-    <div className="flex flex-col min-h-screen overflow-y-auto space-y-5 w-full bg-gray-400 ml-[18vw] p-10">
+    <div className="flex flex-col min-h-screen overflow-y-auto space-y-5 w-full  ml-[18vw] p-10">
       <span>
         <div className="flex flex-row justify-center items-start space-x-10 my-12">
           <h2 className={`${inter.className} mb-5 text-xl font-semibold`}>
