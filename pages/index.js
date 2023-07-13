@@ -494,8 +494,7 @@ export default function Home() {
             <h2 className={`${inter.className} mb-5 text-xl font-semibold`}>
               Custom Contract
             </h2>
-
-            <form className="flex flex-row  mb-5">
+ <form className="flex flex-row  mb-5">
               <label htmlFor="contractAddress">Contract Address</label>
               <input
                 className="ml-3"
