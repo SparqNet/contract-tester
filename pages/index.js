@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { ethers, toBigInt } from "ethers";
 import { CM } from "../abis/abis";
 import { cmAddress } from "@/constants";
+import {ChevronDownIcon} from "@heroicons/react/24/solid";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,6 +14,7 @@ function ContractManager() {
   const [response, setResponse] = useState();
   const [deployedContracts, setDeployedContracts] = useState();
   const [address, setAddress] = useState("");
+  const [showForm, setShowForm] = useState([]);
 
   const [abi, setAbi] = useState();
 
@@ -139,6 +141,18 @@ function ContractManager() {
     return;
   };
 
+  const handleToggleForm = (index) => {
+    let updatedShowForm = [...showForm];
+    if (updatedShowForm[index] === undefined){ 
+      updatedShowForm[index] = true
+      setShowForm(updatedShowForm)
+    }
+    else {
+    updatedShowForm[index] = !updatedShowForm[index];
+    setShowForm(updatedShowForm);
+    }
+  };
+
   useEffect(() => {
     try {
       setDefaults();
@@ -179,17 +193,18 @@ function ContractManager() {
 
           <button
             onClick={() => handleAbiChange()}
-            className="bg-black min-w-[5vw] p-2 text-white rounded-xl"
+            className="bg-black min-w-[5vw] p-2 text-white rounded-lg"
           >
             Upload
           </button>
         </div>
       </span>
 
-      <span>
+      <span className="flex flex-row items-center space-x-5">
+        <div>Press this button to retrieve the functions from your contract manager:</div>
         <button
           onClick={(e) => getInstanceAndFuncts(e)}
-          className="bg-black min-w-[5vw] p-2 text-white rounded-xl"
+          className="bg-black min-w-[5vw] p-2 text-white rounded-lg"
         >
           Get Functions
         </button>
@@ -200,12 +215,12 @@ function ContractManager() {
           let ind = contractFnct["inputs"]?.map((fnct, index) => {
             return (
               <>
-                <span className="flex flex-row space-x-3" key={index}>
-                  <label htmlFor={fnct?.name}>
+                <span className="flex flex-row rounded-lg text-white" key={index}>
+                  <label className="px-3 bg-black rounded-md" htmlFor={fnct?.name}>
                     {fnct?.name?.toUpperCase()}
                   </label>
                   <input
-                    className="w-[10vw] "
+                    className="w-[10vw] text-black outline-none pl-2"
                     id={fnct?.name}
                     name={fnct?.name}
                   />
@@ -215,21 +230,26 @@ function ContractManager() {
           });
 
           return (
-            <span key={index} className="flex flex-row items-center">
+            <span key={index} onClick={() => handleToggleForm(index)} className="flex flex-col rounded-lg space-y-5 p-4 shadow-md mr-10">
+              <div className="flex flex-row items-center justify-between">
               <h2 className="font-bold mr-4">{contractFnct.name}</h2>
+              <ChevronDownIcon className="h-3 w-3" />
+              </div>
+              { showForm[index] &&
               <form
                 id={contractFnct.name}
-                className="flex flex-row w-fit space-x-5 items-center "
+                className="flex flex-col w-fit space-y-5"
               >
                 {ind}
                 <button
                   key={response}
                   onClick={(e) => submitContract(e, contractFnct.name)}
-                  className="bg-black min-w-[5vw] p-2 ml-2 text-white rounded-xl"
+                  className="bg-black min-w-[5vw] p-2 text-white rounded-lg"
                 >
                   Call
                 </button>
               </form>
+        }
             </span>
           );
         })}
@@ -425,7 +445,7 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-row">
-      <div className="bg-black w-[18vw] fixed">
+      <div className="bg-black w-[18vw] fixed rounded-tr-3xl rounded-br-3xl">
         <span className="flex flex-col h-screen justify-around">
           <Image className="w-[50%] mx-auto" height={100} width={100} src='sparqLogo.svg'/>
           <span className="flex flex-col space-y-10  h-[30vh]">
@@ -468,7 +488,7 @@ export default function Home() {
       ) : (
         <div
           key={connected}
-          className="flex flex-col justify-center items-center w-full ml-[18vw] min-h-screen h-[100%] bg-cyan-200 px-10"
+          className="flex flex-col justify-center items-center w-full ml-[18vw] min-h-screen h-[100%] px-10"
         >
           <div className="flex flex-row justify-center space-x-10 ">
             <h2 className={`${inter.className} mb-5 text-xl font-semibold`}>
