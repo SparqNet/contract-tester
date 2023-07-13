@@ -51,12 +51,10 @@ function ContractManager() {
 
   function handleAbiChange() {
     try {
-      console.log(abiInput);
       let reader = new FileReader();
       reader.readAsText(abiInput);
       reader.onload = () => {
-        const abi = JSON.parse(reader.result);
-        const input = abi.abi;
+        const input = JSON.parse(reader.result);
         setAbi(input);
       };
     } catch (error) {
@@ -82,7 +80,6 @@ function ContractManager() {
     try {
       let params = [];
       const inputs = document.querySelectorAll(`#${contractName} input`);
-      console.log(inputs);
       inputs.forEach((element) => {
         if (typeof element.value === "string") {
           params.push(element.value);
@@ -162,7 +159,7 @@ function ContractManager() {
     }
   },[]);
   return (
-    <div className="flex flex-col min-h-screen overflow-y-auto space-y-5 w-full ml-[20vw]">
+    <div className="flex flex-col min-h-screen overflow-y-auto space-y-5 w-full bg-gray-400 ml-[18vw] p-10">
       <span>
         <div className="flex flex-row justify-center items-start space-x-10 my-12">
           <h2 className={`${inter.className} mb-5 text-xl font-semibold`}>
@@ -301,7 +298,6 @@ export default function Home() {
       const signer = await provider.getSigner();
       const address = signer.address;
 
-      console.log(`Connected to Metamask wallet at address ${address}`);
       setConnected(true);
       // Return the provider and signer
       return { signer };
@@ -330,7 +326,6 @@ export default function Home() {
           .request({ method: "eth_accounts" })
           .then((accounts) => {
             if (accounts.length === 0) {
-              console.log("Not Connected");
               setConnected(false);
               return;
             }
@@ -347,7 +342,6 @@ export default function Home() {
     try {
       let params = [];
       const inputs = document.querySelectorAll(`#${FunctName} input`);
-      console.log(inputs);
       inputs.forEach((element) => {
         if (typeof element.value === "string") {
           params.push(element.value);
@@ -415,7 +409,7 @@ export default function Home() {
       reader.readAsText(abiInput);
       reader.onload = () => {
         const input = JSON.parse(reader.result);
-        setContractAbi(input.abi);
+        setContractAbi(input);
       };
     } catch (error) {
       console.log({ "invalid json/abi": error });
@@ -451,13 +445,13 @@ export default function Home() {
           <span className="flex flex-col space-y-10  h-[30vh]">
             <button
               onClick={() => setDefault(true)}
-              className="bg-white w-[60%] justify-center flex flex-row mx-auto rounded p-3 outline-none"
+              className="bg-white w-[70%] text-black justify-center flex flex-row mx-auto rounded p-3 outline-none"
             >
               Contract Manager
             </button>
             <button
               onClick={() => setDefault(false)}
-              className="bg-white w-[60%] justify-center flex flex-row mx-auto rounded p-3 outline-none"
+              className="bg-white text-black w-[70%] justify-center flex flex-row mx-auto rounded p-3 outline-none"
             >
               Custom Contract
             </button>
@@ -466,13 +460,15 @@ export default function Home() {
           {connected == false ? (
             <button
               onClick={() => connectToMetamask()}
-              className="bg-white w-[60%] justify-center flex flex-row mx-auto rounded p-5 outline-none items-center"
+              className="bg-white w-[70%] text-black justify-center flex flex-row mx-auto rounded p-5 outline-none items-center"
             >
-              Connect Metamask
-              <img
+             <p className="w-[50%]">Connect Metamask</p> 
+              <Image
                 alt="Metamask"
-                className="h-[100%] w-[24%] ml-3"
-                src="https://cdn.iconscout.com/icon/free/png-512/metamask-2728406-2261817.png"
+                className="h-[100%] w-[50%] ml-4"
+                width={100}
+                height={100}
+                src="/metamask.png"
               />
             </button>
           ) : (
