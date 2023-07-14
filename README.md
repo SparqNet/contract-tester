@@ -49,7 +49,34 @@ After deploying, grab the address from the “Deployed Contracts” list, click 
 
 Every time you want to change contracts, deploy a new one, change the address and ABI using the inputs, and get the functions.
 
-**NOTE:** The ABI needs to be a valid JSON ABI, not just an array as you might be used to. Make sure the key holding the ABI is labeled "abi". It should look something like this:
+**NOTE:** The ABI needs to be a valid JSON ABI as in an array. It should look something like this:
+```[
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_owner",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_spender",
+        "type": "address"
+      }
+    ],
+    "name": "allowance",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]
+```
 
 **NOTE:** If you are passing an array as input values, just separate them by commas, and the application will do all the necessary changes.
 
