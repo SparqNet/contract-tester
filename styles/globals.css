@@ -4,13 +4,13 @@
 
 :root {
   --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 255, 255, 255;
-  --background-end-rgb:  154, 209, 220;
+  --background-start-rgb: 0, 0, 0;
+  --background-end-rgb:  0, 0, 0;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --foreground-rgb: 255, 255, 255;
+    --foreground-rgb: 0, 0, 0;
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
   }
@@ -25,3 +25,64 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+@keyframes expandHeight {
+  from {
+    max-height: 0;
+    height: auto;
+  }
+  to {
+    max-height: 500px;/* Adjust the desired maximum height */
+    height: auto;
+  }
+}
+
+@keyframes collapseHeight {
+  from {
+    max-height: 500px; /* Adjust the desired maximum height */
+    height: auto;
+  }
+  to {
+    max-height: 0;
+height: auto;
+  }
+}
+
+input {
+  outline: 1px solid #333333;
+  background: transparent;
+  color:white;
+  box-sizing: border-box;
+}
+
+input:focus {
+border: none;
+outline: 1px solid #333333;
+background: transparent;
+color:white;
+ box-sizing: border-box;
+
+}
+
+.text-shadow:hover {
+  text-shadow: 0 0 12px #92EFF2; 
+}
+
+.form-visible {
+  animation: expandHeight 0.5s ease-in-out forwards;
+  opacity: 1;
+  transition: opacity .3s ease-in-out;
+  transition-delay: .1s;
+  margin:1rem 0;
+}
+
+.form-hidden {
+  animation: collapseHeight 0.5s ease-in-out forwards;
+  opacity: 0;
+  transition: opacity .3s ease-in-out;
+  transition-delay: .1s;
+  overflow:hidden;
+  margin:1rem 0;
+}
+
+

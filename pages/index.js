@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { ethers, toBigInt } from "ethers";
 import { CM } from "../abis/abis";
 import { cmAddress } from "@/constants";
-import {ChevronDownIcon} from "@heroicons/react/24/solid";
+import { ChevronDownIcon } from "@heroicons/react/24/solid";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -89,32 +89,24 @@ function ContractManager() {
           params.push(toBigInt(element.value));
         }
         if (typeof element.value === "bytes32[]") {
-          let input = element.value.split(",")
-          params.push(input)
-
+          let input = element.value.split(",");
+          params.push(input);
         }
         if (typeof element.value === "bytes[]") {
-          let input = element.value.split(",")
-          params.push(input)
-          
-          
+          let input = element.value.split(",");
+          params.push(input);
         }
         if (typeof element.value === "string[]") {
-
-          let input = element.value.split(",")
-          params.push(input)
-          
-          
+          let input = element.value.split(",");
+          params.push(input);
         }
         if (typeof element.value === "number[]") {
-          
-          let input = element.value.split(",")
+          let input = element.value.split(",");
           const valid = input.map((element) => {
-            return toBigInt(element)
-          })
-          params.push(valid)
-          
-        } 
+            return toBigInt(element);
+          });
+          params.push(valid);
+        }
       });
 
       let callResult = await response["instance"]
@@ -140,13 +132,12 @@ function ContractManager() {
 
   const handleToggleForm = (index) => {
     let updatedShowForm = [...showForm];
-    if (updatedShowForm[index] === undefined){ 
-      updatedShowForm[index] = true
-      setShowForm(updatedShowForm)
-    }
-    else {
-    updatedShowForm[index] = !updatedShowForm[index];
-    setShowForm(updatedShowForm);
+    if (updatedShowForm[index] === undefined) {
+      updatedShowForm[index] = true;
+      setShowForm(updatedShowForm);
+    } else {
+      updatedShowForm[index] = !updatedShowForm[index];
+      setShowForm(updatedShowForm);
     }
   };
 
@@ -157,22 +148,28 @@ function ContractManager() {
     } catch (error) {
       console.log(error);
     }
-  },[]);
+  }, []);
   return (
-    <div className="flex flex-col min-h-screen overflow-y-auto space-y-5 w-full  ml-[18vw] p-10">
+    <div className="flex flex-col min-h-screen overflow-y-auto space-y-5 w-full  ml-[18vw] p-10 text-white">
       <span>
-        <div className="flex flex-row justify-center items-start space-x-10 my-12">
-          <h2 className={`${inter.className} mb-5 text-xl font-semibold`}>
+        <div className="flex flex-row items-center space-x-10 mt-12 mb-[20vh]">
+          <h2 className={`${inter.className} text-xl font-semibold`}>
             Contract Manager
           </h2>
 
-          <form className="flex flex-row">
-            <label htmlFor="ManagerAddress"> Contract Manager Address </label>
+          <form className="flex flex-row items-center h-[2.5rem]">
+            <label
+              htmlFor="ManagerAddress"
+              className="bg-[#333333] rounded-tl-md rounded-bl-md p-2 h-full"
+            >
+              {" "}
+              Contract Manager Address{" "}
+            </label>
             <input
               onChange={(event) => setCMAddress(event)}
-              className="ml-3"
               id="ManagerAddress"
               name="ManagerAddress "
+              className="p-2 h-[calc(100%-2px)] w-[20.5vw]"
             />
           </form>
         </div>
@@ -182,7 +179,7 @@ function ContractManager() {
             Enter your own JSON ABI:
           </label>
           <input
-            className=""
+            className="outline-none pl-2"
             id="abi"
             type="file"
             onChange={(e) => handleAbiSelect(e)}
@@ -190,7 +187,7 @@ function ContractManager() {
 
           <button
             onClick={() => handleAbiChange()}
-            className="bg-black min-w-[5vw] p-2 text-white rounded-lg"
+            className="bg-[#333333] min-w-[5vw] p-2 text-white rounded-lg"
           >
             Upload
           </button>
@@ -198,26 +195,35 @@ function ContractManager() {
       </span>
 
       <span className="flex flex-row items-center space-x-5">
-        <div>Press this button to retrieve the functions from your contract manager:</div>
+        <div>
+          Press this button to retrieve the functions from your contract
+          manager:
+        </div>
         <button
           onClick={(e) => getInstanceAndFuncts(e)}
-          className="bg-black min-w-[5vw] p-2 text-white rounded-lg"
+          className="bg-[#333333] min-w-[5vw] p-2 text-white rounded-lg"
         >
           Get Functions
         </button>
       </span>
 
-      <div className="space-y-5">
+      <div>
         {response?.functions?.map((contractFnct, index) => {
           let ind = contractFnct["inputs"]?.map((fnct, index) => {
             return (
               <>
-                <span className="flex flex-row rounded-lg text-white" key={index}>
-                  <label className="px-3 bg-black rounded-md" htmlFor={fnct?.name}>
+                <span
+                  className="flex flex-row items-center rounded-lg text-white box-border h-[2rem]"
+                  key={index}
+                >
+                  <div
+                    className="bg-[#333333] rounded-tl-md rounded-bl-md px-2 py-1 h-full"
+                    htmlFor={fnct?.name}
+                  >
                     {fnct?.name?.toUpperCase()}
-                  </label>
+                  </div>
                   <input
-                    className="w-[10vw] text-black outline-none pl-2"
+                    className="w-[10vw] text-white pl-2 py-1 h-[calc(100%-2px)]"
                     id={fnct?.name}
                     name={fnct?.name}
                   />
@@ -227,27 +233,43 @@ function ContractManager() {
           });
 
           return (
-            <span key={index} onClick={() => handleToggleForm(index)} className="flex flex-col rounded-lg space-y-5 p-4 shadow-md mr-10">
-              <div className="flex flex-row items-center justify-between">
-              <h2 className="font-bold mr-4">{contractFnct.name}</h2>
-              <ChevronDownIcon className="h-3 w-3" />
-              </div>
-              { showForm[index] &&
+            <>
+              <span
+                key={index}
+                onClick={() => handleToggleForm(index)}
+                className="flex flex-col rounded-lg p-4 shadow-md mr-10 cursor-pointer bg-[#333333] text-shadow"
+              >
+                <div
+                  onClick={() => handleToggleForm(index)}
+                  className="flex flex-row items-center justify-between cursor-pointer"
+                >
+                  <h2 className="font-bold ">{contractFnct.name}</h2>
+                  <ChevronDownIcon
+                    className={`h-3 w-3 ${
+                      showForm[index]
+                        ? "transition-all rotate-180 duration-500"
+                        : "transition-all rotate-0 duration-500"
+                    }`}
+                  />
+                </div>
+              </span>
+
               <form
                 id={contractFnct.name}
-                className="flex flex-col w-fit space-y-5"
+                className={`flex flex-col mr-10 space-y-5 ${
+                  showForm[index] ? "form-visible" : "form-hidden"
+                }`}
               >
                 {ind}
                 <button
                   key={response}
                   onClick={(e) => submitContract(e, contractFnct.name)}
-                  className="bg-black min-w-[5vw] p-2 text-white rounded-lg"
+                  className="bg-[#333333] w-[10vw] max-w-[10vw] p-2 text-white rounded-lg"
                 >
                   Call
                 </button>
               </form>
-        }
-            </span>
+            </>
           );
         })}
       </div>
@@ -273,8 +295,8 @@ function ContractManager() {
 export default function Home() {
   // let deployedContracts = [{ address: "0x000", name: "test1" }];
   const [defaultComponent, setDefault] = useState(true);
-  const [result, setCallResult] = useState({})
-
+  const [result, setCallResult] = useState({});
+  const [showForm, setShowForm] = useState([]);
   const [connected, setConnected] = useState(false);
   const [response, setResponse] = useState({});
   const [address, setAddress] = useState("");
@@ -352,31 +374,23 @@ export default function Home() {
         }
 
         if (typeof element.value === "bytes32[]") {
-          let input = element.value.split(",")
-          params.push(input)
-
+          let input = element.value.split(",");
+          params.push(input);
         }
         if (typeof element.value === "bytes[]") {
-          let input = element.value.split(",")
-          params.push(input)
-          
-          
+          let input = element.value.split(",");
+          params.push(input);
         }
         if (typeof element.value === "string[]") {
-
-          let input = element.value.split(",")
-          params.push(input)
-          
-          
+          let input = element.value.split(",");
+          params.push(input);
         }
         if (typeof element.value === "number[]") {
-          
-          let input = element.value.split(",")
+          let input = element.value.split(",");
           const valid = input.map((element) => {
-            return toBigInt(element)
-          })
-          params.push(valid)
-          
+            return toBigInt(element);
+          });
+          params.push(valid);
         }
       });
 
@@ -387,10 +401,10 @@ export default function Home() {
             console.log(e);
           }
         });
-      if (typeof(callResult) === "bigint") {
-        callResult = callResult.toString()
+      if (typeof callResult === "bigint") {
+        callResult = callResult.toString();
       }
-      return setCallResult({"result":callResult, "function": FunctName});
+      return setCallResult({ result: callResult, function: FunctName });
     } catch (error) {
       alert("error, check that you are on the correct contract. ");
       console.log(error);
@@ -430,6 +444,17 @@ export default function Home() {
     setAddress(input);
   };
 
+  const handleToggleForm = (index) => {
+    let updatedShowForm = [...showForm];
+    if (updatedShowForm[index] === undefined) {
+      updatedShowForm[index] = true;
+      setShowForm(updatedShowForm);
+    } else {
+      updatedShowForm[index] = !updatedShowForm[index];
+      setShowForm(updatedShowForm);
+    }
+  };
+
   useEffect(() => {
     let funct = checkIsConnected().then(() => {
       console.error();
@@ -439,19 +464,24 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-row">
-      <div className="bg-black w-[18vw] fixed rounded-tr-3xl rounded-br-3xl">
+      <div className="bg-[#2c2c2c] w-[18vw] fixed rounded-tr-3xl rounded-br-3xl">
         <span className="flex flex-col h-screen justify-around">
-          <Image className="w-[50%] mx-auto" height={100} width={100} src='sparqLogo.svg'/>
+          <Image
+            className="w-[50%] mx-auto"
+            height={100}
+            width={100}
+            src="sparqLogo.svg"
+          />
           <span className="flex flex-col space-y-10  h-[30vh]">
             <button
               onClick={() => setDefault(true)}
-              className="bg-white w-[70%] text-black justify-center flex flex-row mx-auto rounded p-3 outline-none"
+              className="bg-[#414141] w-[70%] text-white justify-center flex flex-row mx-auto rounded p-3 outline-none"
             >
               Contract Manager
             </button>
             <button
               onClick={() => setDefault(false)}
-              className="bg-white text-black w-[70%] justify-center flex flex-row mx-auto rounded p-3 outline-none"
+              className="bg-[#414141] text-white w-[70%] justify-center flex flex-row mx-auto rounded p-3 outline-none"
             >
               Custom Contract
             </button>
@@ -462,7 +492,7 @@ export default function Home() {
               onClick={() => connectToMetamask()}
               className="bg-white w-[70%] text-black justify-center flex flex-row mx-auto rounded p-5 outline-none items-center"
             >
-             <p className="w-[50%]">Connect Metamask</p> 
+              <p className="w-[50%]">Connect Metamask</p>
               <Image
                 alt="Metamask"
                 className="h-[100%] w-[50%] ml-4"
@@ -484,19 +514,26 @@ export default function Home() {
       ) : (
         <div
           key={connected}
-          className="flex flex-col justify-center items-center w-full ml-[18vw] min-h-screen h-[100%] px-10"
+          className="flex flex-col w-full ml-[18vw] min-h-screen h-[100%] px-10 text-white"
         >
-          <div className="flex flex-row justify-center space-x-10 ">
-            <h2 className={`${inter.className} mb-5 text-xl font-semibold`}>
+          <div className="flex flex-row items-center space-x-10 mt-12 mb-[10vh] ">
+            <h2 className={`${inter.className} text-xl font-semibold`}>
               Custom Contract
             </h2>
- <form className="flex flex-row  mb-5">
-              <label htmlFor="contractAddress">Contract Address</label>
+
+            <form className="flex flex-row items-center h-[2.5rem]">
+              <label
+                htmlFor="contractAddress"
+                className="bg-[#333333] rounded-tl-md rounded-bl-md p-2 h-full"
+              >
+                {" "}
+                Contract Address{" "}
+              </label>
               <input
-                className="ml-3"
+                onChange={(e) => setContractAddress(e)}
                 id="contractAddress"
                 name="contractAddress"
-                onChange={(e) => setContractAddress(e)}
+                className="p-2 h-[calc(100%-2px)] w-[20.5vw]"
               />
             </form>
           </div>
@@ -506,65 +543,98 @@ export default function Home() {
               Load a new contract ABI:
             </label>
             <input
-              className=""
+              className="outline-none pl-2"
               id="contractABi"
               type="file"
               onChange={(event) => handleContractAbiSelect(event)}
             />
             <button
               onClick={() => handleContractAbiChange()}
-              className="bg-black min-w-[5vw] p-2 text-white rounded-xl"
+              className="bg-[#333333] min-w-[5vw] p-2 text-white rounded-lg"
             >
               Upload
             </button>
           </div>
-
-          <span>
+          <span className="flex flex-row items-center space-x-5 mb-[5vh] mt-[1vh]">
+            <div>
+              Press this button to retrieve the functions from your contract:
+            </div>
             <button
               onClick={(e) => getInstanceAndFuncts(e)}
-              className="bg-black min-w-[5vw] p-2 text-white rounded-xl"
+              className="bg-[#333333] min-w-[5vw] p-2 text-white rounded-lg"
             >
               Get Functions
             </button>
           </span>
 
-          <div className="space-y-5">
+          <div className="space-y-5 mb-12">
             {response?.functions?.map((contractFnct, index) => {
               let ind = contractFnct["inputs"]?.map((fnct, index) => {
                 return (
                   <>
-                    <span className="flex flex-row space-x-3" key={index}>
-                      <label htmlFor={fnct?.name}>
-                        {fnct?.name?.toUpperCase()}
-                      </label>
-                      <input
-                        className="w-[10vw] "
-                        id={fnct?.name}
-                        name={fnct?.name}
-                      />
-                    </span>
+                    <span
+                  className="flex flex-row items-center rounded-lg text-white box-border h-[2rem]"
+                  key={index}
+                >
+                  <div
+                    className="bg-[#333333] rounded-tl-md rounded-bl-md px-2 py-1 h-full"
+                    htmlFor={fnct?.name}
+                  >
+                    {fnct?.name?.toUpperCase()}
+                  </div>
+                  <input
+                    className="w-[10vw] text-white pl-2 py-1 h-[calc(100%-2px)]"
+                    id={fnct?.name}
+                    name={fnct?.name}
+                  />
+                </span>
                   </>
                 );
               });
 
               return (
-                <span key={index} className="flex flex-row items-center">
-                  <h2 className="font-bold mr-4">{contractFnct.name}</h2>
+                <>
+                  <span
+                    key={index}
+                    onClick={() => handleToggleForm(index)}
+                    className="flex flex-col rounded-lg p-4 shadow-md mr-10 cursor-pointer bg-[#333333] text-shadow"
+                  >
+                    <div
+                      onClick={() => handleToggleForm(index)}
+                      className="flex flex-row items-center justify-between cursor-pointer"
+                    >
+                      <h2 className="font-bold ">{contractFnct.name}</h2>
+                      <ChevronDownIcon
+                        className={`h-3 w-3 ${
+                          showForm[index]
+                            ? "transition-all rotate-180 duration-500"
+                            : "transition-all rotate-0 duration-500"
+                        }`}
+                      />
+                    </div>
+                  </span>
+
                   <form
                     id={contractFnct.name}
-                    className="flex flex-row w-fit space-x-5 items-center "
+                    className={`flex flex-col mr-10 space-y-5 ${
+                      showForm[index] ? "form-visible" : "form-hidden"
+                    }`}
                   >
                     {ind}
-                    <button
-                      key={address}
-                      onClick={(e) => submitContract(e, contractFnct.name)}
-                      className="bg-black min-w-[5vw] p-2 ml-2 text-white rounded-xl"
-                    >
-                      Call
-                    </button>
+                    <span className="flex flex-row text-white items-center space-x-12">
+                      <button
+                        key={response}
+                        onClick={(e) => submitContract(e, contractFnct.name)}
+                        className="bg-[#333333] w-[10vw] max-w-[10vw] p-2 text-white rounded-lg"
+                      >
+                        Call
+                      </button>
+                      {contractFnct.name === result.function ? (
+                        <span>Result: {result.result}</span>
+                      ) : null}
+                    </span>
                   </form>
-                  {result?.['function'] === contractFnct.name ? <p className="ml-5">{result?.['result']}</p> : null}
-                </span>
+                </>
               );
             })}
           </div>
