@@ -50,7 +50,9 @@ After deploying, grab the address from the “Deployed Contracts” list, click 
 Every time you want to change contracts, deploy a new one, change the address and ABI using the inputs, and get the functions.
 
 **NOTE:** The ABI needs to be a valid JSON ABI as in an array. It should look something like this:
-```[
+
+```
+[
   {
     "inputs": [
       {
@@ -81,4 +83,3 @@ Every time you want to change contracts, deploy a new one, change the address an
 **NOTE:** If you are passing an array as input values, just separate them by commas, and the application will do all the necessary changes.
 
 Thank you for using the SparqNet contract testing environment!
-
