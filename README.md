@@ -83,3 +83,8 @@ Every time you want to change contracts, deploy a new one, change the address an
 **NOTE:** If you are passing an array as input values, just separate them by commas, and the application will do all the necessary changes.
 
 Thank you for using the SparqNet contract testing environment!
+
+
+Future updates include:
+  -- One-click address copy
+  -- Toast notifications on contract execution
