@@ -55,7 +55,7 @@ export const CM = [
             type: "uint8",
           },
         ],
-        name: "createNewERC20NativeWrapperContract",
+        name: "createNewNativeWrapperContract",
         outputs: [],
         stateMutability: "nonpayable",
         type: "function",
