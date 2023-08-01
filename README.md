@@ -88,3 +88,16 @@ Thank you for using the SparqNet contract testing environment!
 Future updates include:
   -- One-click address copy
   -- Toast notifications on contract execution
+
+
+
+//Factory
+0xE2651E2409D8479572cd1D59eE2e6B9B751deF79
+//Native
+0x357872F740253583bAadBd7fAd7a192E0f3e22d9
+//Router
+0x1073652AA8272A19EBF70832d4E3861aC1664F1A
+//Silver
+0x6D48fDFE009E309DD5c4E69DeC87365BFA0c8119
+//Gold
+0x5b41CEf7F46A4a147e31150c3c5fFD077e54d0e1

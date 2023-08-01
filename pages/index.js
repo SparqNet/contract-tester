@@ -55,6 +55,7 @@ function ContractManager() {
       reader.readAsText(abiInput);
       reader.onload = () => {
         const input = JSON.parse(reader.result);
+        console.log(input);
         setAbi(input);
       };
     } catch (error) {
@@ -364,47 +365,35 @@ export default function Home() {
     try {
       let params = [];
       const inputs = document.querySelectorAll(`#${FunctName} input`);
+
       inputs.forEach((element) => {
-        if (typeof element.value === "string") {
+        if (JSON.parse(element.getAttribute("data")).type.endsWith("[]")) {
+          params.push(element.value.split(","))
+        }
+        if (typeof element.value === "string" && !JSON.parse(element.getAttribute("data")).type.endsWith("[]")) {
           params.push(element.value);
         }
-
-        if (typeof element.value === "number") {
-          params.push(toBigInt(element.value));
-        }
-
-        if (typeof element.value === "bytes32[]") {
-          let input = element.value.split(",");
-          params.push(input);
-        }
-        if (typeof element.value === "bytes[]") {
-          let input = element.value.split(",");
-          params.push(input);
-        }
-        if (typeof element.value === "string[]") {
-          let input = element.value.split(",");
-          params.push(input);
-        }
-        if (typeof element.value === "number[]") {
-          let input = element.value.split(",");
-          const valid = input.map((element) => {
-            return toBigInt(element);
-          });
-          params.push(valid);
-        }
       });
-
+      console.log(...params)
       let callResult = await response["instance"]
         [FunctName](...params)
         .catch((e) => {
           if (e.code === 4001) {
             console.log(e);
           }
+          console.log(e);
         });
       if (typeof callResult === "bigint") {
         callResult = callResult.toString();
       }
+      if (typeof callResult === "object") {
+        return setCallResult({ result: "Success", function: FunctName });
+      }
+      if (callResult != undefined) {
+        return setCallResult({ result: "Success", function: FunctName });
+      } else {
       return setCallResult({ result: callResult, function: FunctName });
+      }
     } catch (error) {
       alert("error, check that you are on the correct contract. ");
       console.log(error);
@@ -573,21 +562,22 @@ export default function Home() {
                 return (
                   <>
                     <span
-                  className="flex flex-row items-center rounded-lg text-white box-border h-[2rem]"
-                  key={index}
-                >
-                  <div
-                    className="bg-[#333333] rounded-tl-md rounded-bl-md px-2 py-1 h-full"
-                    htmlFor={fnct?.name}
-                  >
-                    {fnct?.name?.toUpperCase()}
-                  </div>
-                  <input
-                    className="w-[10vw] text-white pl-2 py-1 h-[calc(100%-2px)]"
-                    id={fnct?.name}
-                    name={fnct?.name}
-                  />
-                </span>
+                      className="flex flex-row items-center rounded-lg text-white box-border h-[2rem]"
+                      key={index}
+                    >
+                      <div
+                        className="bg-[#333333] rounded-tl-md rounded-bl-md px-2 py-1 h-full"
+                        htmlFor={fnct?.name}
+                      >
+                        {fnct?.name?.toUpperCase()}
+                      </div>
+                      <input
+                        className="w-[10vw] text-white pl-2 py-1 h-[calc(100%-2px)]"
+                        id={fnct?.name}
+                        name={fnct?.name}
+                        data={JSON.stringify(fnct)}
+                      />
+                    </span>
                   </>
                 );
               });
