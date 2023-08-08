@@ -2,9 +2,47 @@
 
 Front-end site built for testing contract logic within OrbiterSDK.
 
-Clone this project, open up your IDE, navigate into its root folder and follow the steps below.
+## Setup
+### Docker Setup
 
-## Dependencies
+For running the project in a docker container, we need firstly to clone the repository:
+
+```
+git clone https://github.com/SparqNet/contract-tester.git
+cd contract-tester
+```
+
+Then, install Docker on your system (if you don't have it installed already). Instructions for your system can be found on the links below:
+
+* [Docker for Windows](https://docs.docker.com/docker-for-windows/install/)
+* [Docker for Mac](https://docs.docker.com/docker-for-mac/install/)
+* [Docker for Linux](https://docs.docker.com/desktop/install/linux-install/)
+
+
+After installing Docker, we need to build the image:
+
+```
+docker build -t contract-tester .
+```
+
+And finally, run the container:
+
+```
+docker run -p 3000:3000 contract-tester
+```
+
+Also, we can use docker-compose to run the container (it will build the image if it doesn't exist already)
+
+```
+docker-compose up
+```
+
+The application will run on http://localhost:3000 unless you already have something running.
+
+
+### Manual Setup
+
+If you want to run the project manually, you will need to install the following dependencies:
 
 ```
 sudo apt install npm
@@ -12,10 +50,22 @@ sudo npm install --global yarn
 npm install next react@latest react-dom
 ```
 
-## Deploying
+Then, clone the repository:
+
+```
+git clone https://github.com/SparqNet/contract-tester.git
+cd contract-tester
+```
+
+After that, you will need to install the dependencies:
 
 ```
 yarn install
+```
+
+Finally, you can run the project:
+
+```
 yarn build
 yarn start
 ```
