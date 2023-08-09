@@ -1,27 +1,20 @@
-FROM debian:bookworm
+# Start with the official Node image
+FROM node:16
 
 # Set the working directory inside the container
 WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json before other files
-# Utilize cache to save Docker build time
-COPY package.json package-lock.json ./
+# Copy package.json and yarn.lock first
+COPY package.json yarn.lock ./
 
 # Install dependencies
-RUN apt-get update && apt-get install -y curl sudo gnupg && \
-    curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash - && \
-    sudo apt-get install -y nodejs && \
-    sudo apt install -y npm && \
-    sudo npm install --global yarn
+RUN yarn install
 
-# Install app dependencies
-RUN npm install next react@latest react-dom
-
-# Copy other application files
+# Copy the rest of the application files
 COPY . .
 
-# Build the application for production
+# Install and build
 RUN yarn install && yarn build
 
 # Specify the command to run on container start
-CMD [ "yarn", "start" ]
+CMD [ "yarn", "start"]
